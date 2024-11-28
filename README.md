@@ -6,7 +6,7 @@ Pilots can often choose the altitude at which they fly. Aviation weather sources
 
 Possible data sources: 
 https://aviationweather.gov/data/api/
-https://aviationweather.gov/data/windtemp/?region=chi&fcst=06&level=low
+https://aviationweather.gov/api/data/windtemp?region=all
 
 ## Formula
 Reference: https://en.wikipedia.org/wiki/Headwind_and_tailwind
@@ -31,3 +31,24 @@ System displays the best altitude to fly, for example: 9000ft. System also displ
 - Package for Android
 - Enhance so that it can fetch the data prior to the flight, and rely on that data store when internet is not available. 
 
+
+## Data sources
+This stations file contains the gps coordinates of airports: 
+https://aviationweather.gov/data/cache/stations.cache.json.gz
+
+```
+jq '.[] | select(.icaoId == "KAXN")' stations.cache.json 
+{
+  "icaoId": "KAXN",
+  "iataId": "AXN",
+  "faaId": "AXN",
+  "wmoId": "-",
+  "lat": 45.868,
+  "lon": -95.394,
+  "elev": 433,
+  "site": "Alexandria/Chandler Fld",
+  "state": "MN",
+  "country": "US",
+  "priority": 3
+}
+```

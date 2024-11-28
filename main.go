@@ -1,6 +1,7 @@
 package main
 
 import (
+	"aloft/winds"
 	"fmt"
 	"os"
 
@@ -33,10 +34,30 @@ var showCmd = &cobra.Command{
 	},
 }
 
+var windTempCmd = &cobra.Command{
+	Use:   "windtemp",
+	Short: "Show wind and temperature data",
+	Long:  `Show detailed wind and temperature data from aviationweather.gov.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("Showing wind and temperature data\n\n")
+
+		wa := &winds.WindsAloft{}
+		stringWindData, err := wa.FetchWindsData()
+		if err != nil {
+			fmt.Println("here")
+			fmt.Println(err)
+		}
+
+		fmt.Println(stringWindData)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(showCmd)
 	showCmd.Flags().StringP("airport", "a", "", "Airport code")
 	showCmd.MarkFlagRequired("airport")
+
+	rootCmd.AddCommand(windTempCmd)
 }
 
 func main() {

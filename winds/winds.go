@@ -2,6 +2,8 @@ package winds
 
 import (
 	"fmt"
+	"io"
+	"net/http"
 )
 
 type Wind struct {
@@ -24,9 +26,18 @@ func (wa *WindsAloft) AddWind(wind Wind) {
 	wa.Winds[wind.Airport] = wind
 }
 
-func (wa *WindsAloft) PrintWinds() {
-	for _, wind := range wa.Winds {
-		fmt.Printf("Airport: %s, 0ft: %s, 3000ft: %s, 6000ft: %s, 9000ft: %s, 12000ft: %s\n",
-			wind.Airport, wind.Ft0, wind.Ft3000, wind.Ft6000, wind.Ft9000, wind.Ft12000)
+func (wa *WindsAloft) FetchWindsData() (string, error) {
+	resp, err := http.Get("https://aviationweather.gov/api/data/windtemp?region=all")
+	if err != nil {
+		fmt.Println("Error fetching data", err)
+		return "", err
 	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		fmt.Println("Error reading data", err)
+		return "", err
+	}
+	return string(body), nil
 }
