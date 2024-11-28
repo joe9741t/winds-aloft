@@ -22,5 +22,12 @@ Headwind = cos(A) * WS
 Pilot would enter the nearest airport identifier, for example: KLJF. 
 System displays the best altitude to fly, for example: 9000ft. System also displays the amount of headwind and tailwind. 
 
-
+## Possible development direction/tasks: 
+- Start with a cli app using cobra and make it take the inputs and do the calculation. 
+- Write some tests and use GitHub actions to run them with each commit
+- Add a `serve` option to the cli which allows input/outputs via htmx on a web page
+- Put it in a Docker image and run it somewhere
+- Use fyne to build a mobile app 
+- Package for Android
+- Enhance so that it can fetch the data prior to the flight, and rely on that data store when internet is not available. 
 
